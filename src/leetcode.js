@@ -5,25 +5,39 @@
  * @return {number}
  */
 var divide = function(dividend, divisor) {
-    // Edge Cases
-    if( divisor === 0 ) { return Infinity };
-    if( dividend === 0 ) { return 0 };
-    if( divisor === -1 ) { return -dividend === 2147483648 ? 2147483647 : -dividend};
-    if( divisor === 1 ) { return dividend };
+    // Checking if dividend = divisor 
+    if (dividend === divisor) { return 1 }
 
-    // Find Sign
-    const isPositive = Math.sign(dividend) === Math.sign(divisor);
-    let posDivid = Math.abs(dividend);
-    let posDivis = Math.abs(divisor);
+    // Checking for multiple negatives
+    if( dividend < 0 && divisor < 0 ) {
+        dividend = -dividend;
+        divisor = -divisor;
+    }
+
+    // Checking for ranges [−2^31, 2^31 − 1]
+    if( dividend >= 2147483648 ) { dividend = 2147483647 };
+    if( dividend < -2147483648 ) { dividend = -2147483648 };
+
+    // Checking for case where divisor is equal to 1 or -1, or dividend is equal to 0
+    if( divisor === -1 ) {return -dividend}
+    else if ( divisor === 1 ) { return dividend }
+    else if (dividend === 0) { return 0 };
+
+    // Solving for all other cases
+    let isNegative = false;
+    if( (dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0) ) {
+        isNegative = true;
+    }
+    let posDividend = dividend < 0 ? -dividend : dividend;
+    let posDivisor = divisor < 0 ? -divisor : divisor;
     let count = 0;
 
-    while( posDivid - posDivis >= 0) {
-        posDivid -= posDivis;
+    while( posDividend - posDivisor >= 0) {
+        posDividend -= posDivisor;
         count++;
     }
 
-
-    return isPositive ? count : -count;
+    return isNegative ? -count: count;
 };
 
 
