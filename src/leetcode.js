@@ -73,3 +73,6 @@ var searchInsert = function(nums, target) {
     }
     //return mid;
 };
+
+
+export const {divide, searchInsert} = leetCode;
