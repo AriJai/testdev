@@ -6,38 +6,35 @@
  */
 var divide = function(dividend, divisor) {
     // Checking if dividend = divisor 
-    if (dividend === divisor) { return 1 }
+    if (dividend === divisor) { return 1; }
 
     // Checking for multiple negatives
-    if( dividend < 0 && divisor < 0 ) {
-        dividend = -dividend;
-        divisor = -divisor;
-    }
+    // if( dividend < 0 && divisor < 0 ) {
+    //     dividend = -dividend;
+    //     divisor = -divisor;
+    // }
 
     // Checking for ranges [−2^31, 2^31 − 1]
-    if( dividend >= 2147483648 ) { dividend = 2147483647 };
-    if( dividend < -2147483648 ) { dividend = -2147483648 };
+    if( dividend >= 2147483648 ) { dividend = 2147483647; }
+    if( dividend < -2147483648 ) { dividend = -2147483648; }
 
     // Checking for case where divisor is equal to 1 or -1, or dividend is equal to 0
-    if( divisor === -1 ) {return -dividend}
-    else if ( divisor === 1 ) { return dividend }
-    else if (dividend === 0) { return 0 };
+    if( divisor === -1 ) {return -dividend;}
+    else if ( divisor === 1 ) { return dividend; }
+    else if (dividend === 0) { return 0; }
 
-    // Solving for all other cases
-    let isNegative = false;
-    if( (dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0) ) {
-        isNegative = true;
-    }
-    let posDividend = dividend < 0 ? -dividend : dividend;
-    let posDivisor = divisor < 0 ? -divisor : divisor;
+     // Solving for all other cases
+    const isQuotientNegative = (dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0);
+    let positiveDividend = Math.abs(dividend);
+    const positiveDivisor = Math.abs(divisor);
     let count = 0;
 
-    while( posDividend - posDivisor >= 0) {
-        posDividend -= posDivisor;
+    while( positiveDividend - positiveDivisor >= 0) {
+        positiveDividend -= positiveDivisor;
         count++;
     }
 
-    return isNegative ? -count: count;
+    return isQuotientNegative ? -count: count;
 };
 
 
